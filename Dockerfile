@@ -1,11 +1,19 @@
 FROM python:3.9
 
+# Güncellemeleri yükle
 RUN apt update -y
 
+# Gerekli paketleri yükle
 RUN apt install curl -y
 
-RUN curl -fsSL code-server.dev/install.sh | bash
+# code-server kurulumunu yap
+RUN curl -fsSL https://code-server.dev/install.sh | sh
 
-RUN export PASSWORD=12345
+# code-server için parola ayarla
+ENV PASSWORD=12345
 
-RUN code-server --host 0.0.0.0 --port 443
+# Yüksek numaralı bir port kullan
+EXPOSE 8080
+
+# code-server'ı başlat
+CMD ["code-server", "--host", "0.0.0.0", "--port", "8080"]
